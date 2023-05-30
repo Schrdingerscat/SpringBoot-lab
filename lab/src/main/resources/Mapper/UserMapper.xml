@@ -63,11 +63,16 @@
 	</update>
 
     <select id="getUserByid" parameterType="User" resultMap="UserResult">
-		SELECT * FROM user WHERE id = #{Id} 
+		SELECT * FROM user WHERE id = #{Id}
+	</select>
+
+	<select id="getUserByUserId" parameterType="String" resultMap="UserResult">
+		SELECT * FROM user WHERE user_id = #{user_id}
 	</select>
 
 
-    <select id="checkLogin" resultMap="UserResult">
+
+	<select id="checkLogin" resultMap="UserResult">
 		SELECT
 				u.*, ur.role_id
 			FROM

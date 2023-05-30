@@ -35,7 +35,7 @@ public interface UserMapper {
     public User updateUserByid(User user);
 
 
-    public int getUserByid(int userid);
+    public User getUserByid(int userid);
 
     public User checkLogin(String userId, String pwd);
 
@@ -44,6 +44,8 @@ public interface UserMapper {
     void deleteUserById(String userId);
 
     void updateById(User user);
+
+    User getUserByUserId(String user_id);
 
 
 }

@@ -1,13 +1,15 @@
 package com.gxuwz.lab.entry;
 
 
+import lombok.Data;
+
 /**
  * @author Fonrye
  * @version 1.0
  * @creat by IntelliJ IDEA
  * @date 2021/6/4 21:16
  **/
-
+@Data
 public class User implements java.io.Serializable {
 
 
@@ -50,6 +52,22 @@ public class User implements java.io.Serializable {
         this.email = email;
         this.grade = grade;
     }
+
+    public User(User user) {
+        this.userId = user.getUserId();
+        this.userName = user.getUserName();
+        this.pwd = user.getPwd();
+        this.picture = user.getPicture();
+        this.roleId = user.getRoleId();
+        this.sectionId = user.getSectionId();
+        this.major = user.getMajor();
+        this.college = user.getCollege();
+        this.clas = user.getClas();
+        this.phone = user.getPhone();
+        this.email = user.getEmail();
+        this.grade = user.getGrade();
+    }
+
 
 
     // Property accessors

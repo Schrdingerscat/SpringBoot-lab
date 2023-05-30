@@ -1,8 +1,12 @@
 package com.gxuwz.lab.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gxuwz.lab.Annotation.PassToken;
 import com.gxuwz.lab.api.CommonResult;
 import com.gxuwz.lab.entry.User;
 import com.gxuwz.lab.service.LoginService;
+import com.gxuwz.lab.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,15 +29,31 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService ;
-	
+
+	@Autowired
+	private TokenUtil tokenUtil;
+
 	@PostMapping("/login")
-    public CommonResult login(@RequestBody User user) {
-    	User user2 = new User();
+	@PassToken
+    public CommonResult login(@RequestBody User user){
+    	User user2;
+		ObjectMapper mapper = new ObjectMapper();
     	user2 = loginService.checkLogin(user.getUserId(),user.getPwd());
 
-    	 if (user2 != null)
-	            return CommonResult.success(user2);
-	        else
+    	 if (user2 != null) {
+			 Object userWithToken = new User(user2){
+				 public String getToken() {
+					 return token;
+				 }
+
+				 public void setToken(String token) {
+					 this.token = token;
+				 }
+
+				 private String token = tokenUtil.getToken(user2);
+			 };
+			 return CommonResult.success(userWithToken);
+		 }else
 	            return CommonResult.validateFailed();
        
     }

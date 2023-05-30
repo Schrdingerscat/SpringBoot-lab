@@ -1,5 +1,6 @@
 package com.gxuwz.lab.controller;
 
+import com.gxuwz.lab.Annotation.UserLoginToken;
 import com.gxuwz.lab.api.CommonResult;
 import com.gxuwz.lab.entry.Recruitment;
 import com.gxuwz.lab.service.RecruitService;
@@ -18,6 +19,7 @@ public class RecruitController {
 
 
 	@GetMapping("/list")
+	@UserLoginToken
     public CommonResult getList() {
 
         List<Recruitment> list = recruitService.getList();

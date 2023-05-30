@@ -1,6 +1,7 @@
 package com.gxuwz.lab.controller;
 
 
+import com.gxuwz.lab.Annotation.UserLoginToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.gxuwz.lab.api.CommonResult;
@@ -41,6 +42,7 @@ public class FormController {
 	 * @return
 	 */
 	@GetMapping("/review/{plan_id}")
+	@UserLoginToken
 	public CommonResult review(@PathVariable("plan_id") Integer plan_id){
 
 		List<Form> list = formService.getReviewByRecruitId(plan_id);

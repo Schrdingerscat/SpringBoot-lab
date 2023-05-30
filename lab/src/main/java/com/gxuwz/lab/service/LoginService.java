@@ -2,6 +2,7 @@ package com.gxuwz.lab.service;
 
 import com.gxuwz.lab.entry.User;
 import com.gxuwz.lab.entry.UserRole;
+import com.gxuwz.lab.mapper.LoginMapper;
 import com.gxuwz.lab.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
 	@Autowired
 	UserMapper userMapper;
-	
+
+	@Autowired
+	LoginMapper loginMapper;
 	
 	public void save(User artisan) {
 		userMapper.addUser(artisan);
@@ -38,4 +41,11 @@ public class LoginService {
 	    return user;
 		
 	}
+
+	public String getPwdById(String  userid){
+		User user = userMapper.getUserByUserId(userid);
+		String password  = user.getPwd();
+		return password;
+	}
+
 }

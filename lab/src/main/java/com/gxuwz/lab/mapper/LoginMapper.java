@@ -18,7 +18,7 @@ public interface LoginMapper{
     /**
      * 根据条件分页查询实验室技术人员列表
      * 
-     * @param artisan 实验室技术人员
+     * @param  user 实验室技术人员
      * @return 实验室技术人员信息集合信息
      */
     public List<User> selectUserList(User user);
@@ -29,5 +29,7 @@ public interface LoginMapper{
     
     public User updateUserByid(User user);
     
-    public int getUserByid(int userid);
+    public User getUserByid(int userid);
+
+
 }

@@ -197,7 +197,7 @@ CREATE TABLE Student (
 CREATE TABLE ExperimentResult (
     id INT PRIMARY KEY COMMENT '实验结果ID',
     student_id INT COMMENT '学生ID',
-    location VARCHAR(255) COMMENT '文件存放位置'
+    location VARCHAR(255) COMMENT '文件存放位置',
     FOREIGN KEY (student_id) REFERENCES Student(id)
 ) COMMENT='实验结果表';
 
@@ -212,3 +212,4 @@ CREATE TABLE Issue (
 
 ```
 
+完整的建表文件在hsj666.sql中

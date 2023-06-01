@@ -7,6 +7,15 @@
 
 /*! @source http://purl.eligrey.com/github/Blob.js/blob/master/Blob.js */
 
+
+/** 
+ * 这段代码是一个Blob.js的polyfill，它提供了一个Blob构造函数，用于在不支持原生Blob对象的浏览器中创建Blob对象。
+
+ * Blob对象表示一个不可变的二进制数据块。它通常用于处理二进制文件，例如图像、音频和视频。这个polyfill通过模拟原生Blob对象的行为，使开发人员能够在不支持原生Blob对象的浏览器中使用Blob对象。
+
+ * 这个polyfill首先检查浏览器是否支持原生Blob对象和URL接口。如果支持，则不执行任何操作。如果不支持，则使用BlobBuilder实现来模拟Blob对象。这个polyfill还提供了一些其他功能，例如URL.createObjectURL和URL.revokeObjectURL方法的polyfill。
+ * 
+*/
 (function (view) {
   "use strict";
 

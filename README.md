@@ -49,6 +49,22 @@
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0627/161346_e7c167a8_5479964.png "屏幕截图.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0627/161409_9c9487ae_5479964.png "屏幕截图.png")
 
+
+
+要求：
+
+> 1）排课管理：实验室管理老师可以编辑实验室设备硬件配置信息、软件安装情况，上课老师可以线上预约实验室上课，并进一步给出实验环境要求。学生可以查询课表获取实验课安排情况及相关实验要求。
+>
+> 2）上课管理：学生进入实验室上课，需选择实验设备设定位置信息，老师或者助教通过位置信息可记录学生实验情况和相关问题，或者碰到设备问题可向管理员咨询或者反馈。
+>
+> 3）下课管理：学生实验结果保存及上交，下次实验可继续使用。
+>
+> 4) 系统定期（每日）汇总问题发送邮件知会管理员
+
+
+
+
+
 # 项目运行指南：
 
 ## 后端
@@ -123,4 +139,76 @@
 - `POST /User/save`: 保存用户信息。
 - `DELETE /User/deleteById/{userId}`: 根据ID删除用户。
 - `POST /User/update`: 更新用户信息。
+
+# 数据库表设计：
+
+实验室表（Lab）：包含实验室ID、名称、硬件配置信息和软件安装情况等字段。 
+
+预约表（Reservation）：包含预约ID、实验室ID、上课老师ID、预约时间段、实验环境，预约情况要求等字段。
+
+课程表（Course）：包含课程ID、预约ID、课程名称、预约时间段等字段。 
+
+学生表（Student）：包含学生ID、姓名、班级ID等字段。 
+
+实验结果表（ExperimentResult）：包含实验结果ID、学生ID等字段。
+
+ 问题反馈表（Issue）：包含问题反馈ID、选课ID、问题描述、反馈时间等字段。
+
+```sql
+-- 设置编码
+SET NAMES utf8mb4;
+
+-- 创建实验室表
+CREATE TABLE Lab (
+    id INT PRIMARY KEY COMMENT '实验室ID',
+    name VARCHAR(255) COMMENT '实验室名称',
+    hardware_info TEXT COMMENT '硬件配置信息',
+    software_info TEXT COMMENT '软件安装情况'
+) COMMENT='实验室表';
+
+-- 创建预约表
+CREATE TABLE Reservation (
+    id INT PRIMARY KEY COMMENT '预约ID',
+    lab_id INT COMMENT '实验室ID',
+    teacher_id INT COMMENT '上课老师ID',
+    reservation_time_slot_code INT COMMENT '预约时间段',
+    requirements TEXT COMMENT '实验环境要求',
+    reservation_status VARCHAR(255) COMMENT '预约情况',
+    FOREIGN KEY (lab_id) REFERENCES Lab(id)
+) COMMENT='预约表';
+
+-- 创建课程表
+CREATE TABLE Course (
+    id INT PRIMARY KEY COMMENT '课程ID',
+    reservation_id INT COMMENT '预约ID',
+    name VARCHAR(255) COMMENT '课程名称',
+    reservation_time_slot_code INT COMMENT '预约时间段',
+    FOREIGN KEY (reservation_id) REFERENCES Reservation(id)
+) COMMENT='课程表';
+
+-- 创建学生表
+CREATE TABLE Student (
+    id INT PRIMARY KEY COMMENT '学生ID',
+    name VARCHAR(255) COMMENT '学生姓名',
+    class_id INT COMMENT '班级ID'
+) COMMENT='学生表';
+
+-- 创建实验结果表
+CREATE TABLE ExperimentResult (
+    id INT PRIMARY KEY COMMENT '实验结果ID',
+    student_id INT COMMENT '学生ID',
+    location VARCHAR(255) COMMENT '文件存放位置'
+    FOREIGN KEY (student_id) REFERENCES Student(id)
+) COMMENT='实验结果表';
+
+-- 创建问题反馈表
+CREATE TABLE Issue (
+    id INT PRIMARY KEY COMMENT '问题反馈ID',
+    enrollment_id INT,
+    description TEXT COMMENT '问题描述',
+    feedback_time DATETIME COMMENT '反馈时间'
+) COMMENT='问题反馈表';
+
+
+```
 
